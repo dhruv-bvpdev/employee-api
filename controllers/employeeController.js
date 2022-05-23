@@ -1,6 +1,5 @@
-import mysql from 'mysql'
 import { query } from '../utils/connectDB.js'
-import { formatSQLSelect } from '../utils/sqlFormatter.js'
+import { formatSQLSelect, formatSQLInsert } from '../utils/sqlFormatter.js'
 
 //* @desc: get all employee data
 //* @route: GET /api/employees
@@ -58,7 +57,8 @@ const addNewEmployee = async (req, res) => {
   } = req.body
   const sql =
     'INSERT INTO employees (employee_id, first_name, last_name, email, phone_number, hire_date, job_id, salary, manager_id, department_id) VALUES(?,?,?,?,?,?,?,?,?,?)'
-  const insertEmployeeQuery = await mysql.format(sql, [
+  const insertEmployeeQuery = await formatSQLInsert(
+    sql,
     id,
     fname,
     lname,
@@ -69,7 +69,7 @@ const addNewEmployee = async (req, res) => {
     salary,
     managerid,
     deptid
-  ])
+  )
   const queryResult = await query(insertEmployeeQuery)
   if (!queryResult) {
     res.status(404)

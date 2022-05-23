@@ -16,11 +16,11 @@ const formatSQLSelect = async (
   return query
 }
 
-const formatSQLInsert = async (...args) => {
-  const formattingArray = []
-  formattingArray.push()
-  const query = await mysql.format(sql, ...args)
-  return query()
+const formatSQLInsert = async (sql, ...args) => {
+  const newArrayForInsertion = []
+  newArrayForInsertion.push(...args)
+  const query = await mysql.format(sql, newArrayForInsertion)
+  return query
 }
 
 export { formatSQLSelect, formatSQLInsert }
