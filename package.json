@@ -9,7 +9,7 @@
     "dev": "nodemon server"
   },
   "repository": {
-    "url": ""
+    "url": "https://github.com/dhruv-bvpdev/employee-api.git"
   },
   "author": "Dhruv Gursahani",
   "license": "MIT",
