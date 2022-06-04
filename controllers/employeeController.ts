@@ -1,25 +1,18 @@
-import { query } from '../utils/connectDB.js'
-import { formatSQLSelect, formatSQLInsert } from '../utils/sqlFormatter.js'
+import { Request, Response } from 'express'
+import prisma from '../server'
 
 //* @desc: get all employee data
 //* @route: GET /api/employees
 //* @access: Public
-const getAllEmployees = async (req, res) => {
-  const sql = 'SELECT * FROM ??'
-  const getEmployeeQuery = await formatSQLSelect(sql, 'employees')
-  const employeeData = await query(getEmployeeQuery)
-  if (!employeeData) {
-    res.status(404)
-    throw new Error('No Employee found')
-  } else {
-    res.json(employeeData)
-  }
+const getAllEmployees = async (req: Request, res: Response) => {
+  const products = await prisma.employees.findMany({})
+  res.json(products)
 }
 
 //* @desc: get details of a specific employee using filter
 //* @route: POST /api/employees
 //* @access: Public
-const getSingleEmployee = async (req, res) => {
+/* const getSingleEmployee = async (req: Request, res: Response) => {
   const { filter, value } = req.body
   console.log(filter, value)
   const sql = 'SELECT * FROM ?? WHERE ?? = ?'
@@ -37,12 +30,12 @@ const getSingleEmployee = async (req, res) => {
   } else {
     res.json(employeeData)
   }
-}
+} */
 
 //* @desc: add new employee
 //* @route: POST /api/employees/insert-employee
 //* @access: Private
-const addNewEmployee = async (req, res) => {
+/* const addNewEmployee = async (req: Request, res: Response) => {
   const {
     id,
     fname,
@@ -77,6 +70,6 @@ const addNewEmployee = async (req, res) => {
   } else {
     res.json({ message: 'new employee added' })
   }
-}
+} */
 
-export { getAllEmployees, getSingleEmployee, addNewEmployee }
+export { getAllEmployees }

@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Regions {
+  region_id Int @id @default(autoincrement())
+  region_name String?
+  countries Countries[]
+}
+
+model Countries {
+  country_id String @id
+  country_name String?
+  RegionID Regions @relation(fields: [region_id], references: [region_id])
+  region_id Int
+  locations Locations[]
+}
+
+model Locations {
+  location_id Int @id @default(autoincrement())
+  street_address String?
+  postal_code String?
+  city String
+  state_province String?
+  countryID Countries @relation(fields: [country_id], references: [country_id])
+  country_id String
+  departments Departments[]
+}
+
+model Jobs {
+  job_id Int @id @default(autoincrement())
+  job_title String
+  min_salary Decimal?
+  max_salary Decimal?
+  employee Employees[]
+}
+
+model Departments {
+  department_id Int @id @default(autoincrement())
+  department_name String
+  locationID Locations? @relation(fields: [location_id], references: [location_id])
+  location_id Int
+  employee Employees[]
+}
+
+model Employees {
+  employee_id Int @id @default(autoincrement())
+  first_name String? 
+  last_name String
+  email String
+  phone_number String?
+  hire_date DateTime
+  jobID Jobs @relation(fields: [job_id], references: [job_id])
+  job_id Int
+  salary Decimal
+  manager_id Int?
+  departmentID Departments? @relation(fields: [department_id], references: [department_id])
+  department_id Int
+  dependent Dependents[]
+}
+
+model Dependents {
+  dependent_id Int @id @default(autoincrement())
+  first_name String
+  last_name String
+  relationship String
+  employeeID Employees? @relation(fields: [employee_id], references: [employee_id])
+  employee_id Int
+}
+

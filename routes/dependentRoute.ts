@@ -1,4 +1,4 @@
-import express from 'express'
+/* import express from 'express'
 import {
   getAllDependents,
   getSingleDependee
@@ -8,3 +8,4 @@ const router = express.Router()
 
 router.route('/').get(getAllDependents).post(getSingleDependee)
 export default router
+ */
